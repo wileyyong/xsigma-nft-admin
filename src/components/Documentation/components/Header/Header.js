@@ -79,7 +79,7 @@ const Header = props => {
           )}
         </IconButton>
         <Typography variant="h6" block className={classes.logo}>
-          React Material Admin Full{" "}
+          XSigma Admin{" "}
           <Typography variant={"h5"}>&nbsp; Documentation</Typography>
         </Typography>
         <Box

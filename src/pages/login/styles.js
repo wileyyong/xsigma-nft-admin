@@ -61,10 +61,14 @@ export default makeStyles(theme => ({
     [theme.breakpoints.down("md")]: {
       width: "50%",
       overflow: "visible"
+    },
+    [theme.breakpoints.down("sm")]: {
+      width: "100%"
     }
   },
   form: {
-    width: 320
+    width: 320,
+    marginTop: '25%'
   },
   tab: {
     fontWeight: 400,
@@ -153,7 +157,9 @@ export default makeStyles(theme => ({
   },
   copyright: {
     marginTop: theme.spacing(4),
-    whiteSpace: "nowrap",
+    // whiteSpace: "nowrap",
+    maxWidth: 340,
+    textAlign: 'center',
     [theme.breakpoints.up("md")]: {
       bottom: theme.spacing(2)
     }

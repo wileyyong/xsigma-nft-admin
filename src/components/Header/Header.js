@@ -166,7 +166,7 @@ export default function Header(props) {
           )}
         </IconButton>
         <Typography variant="h6" weight="medium" className={classes.logotype}>
-          React Material Admin Full
+          XSigma Admin
         </Typography>
         <div className={classes.grow} />
         <div

@@ -174,7 +174,7 @@ const UserList = () => {
     }
 
     React.useEffect(() => {
-      sendNotification('This page is only available in React Material Admin Full with Node.js integration!')
+      sendNotification('This page is only available in XSigma Admin Full with Node.js integration!')
       async function fetchAPI() {
         try {
           await actions.doFetch({}, false)(managementDispatch);

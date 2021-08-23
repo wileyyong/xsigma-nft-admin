@@ -14,7 +14,7 @@ import classnames from "classnames";
 import useStyles from "./styles";
 
 // logo
-import logo from "./logo.svg";
+import logo from "./logo.png";
 import google from "../../images/google.svg";
 
 // context
@@ -69,7 +69,7 @@ function Login(props) {
     <Grid container className={classes.container}>
       <div className={classes.logotypeContainer}>
         <img src={logo} alt="logo" className={classes.logotypeImage} />
-        <Typography className={classes.logotypeText}>Material Admin</Typography>
+        <Typography className={classes.logotypeText}>XSigma Admin</Typography>
       </div>
       <div className={!isForgot ? classes.formContainer : classes.customFormContainer}>
         <div className={classes.form}>
@@ -130,7 +130,7 @@ function Login(props) {
             centered
           >
             <Tab label="Login" classes={{ root: classes.tab }} />
-            <Tab label="New User" classes={{ root: classes.tab }} />
+            {/* <Tab label="New User" classes={{ root: classes.tab }} /> */}
           </Tabs>
           {activeTabId === 0 && (
             <React.Fragment>
@@ -156,7 +156,7 @@ function Login(props) {
               <Typography variant="h1" className={classes.greeting}>
                 {getGreeting()}, User
               </Typography>
-              <Button
+              {/* <Button
                 size="large"
                 className={classes.googleButton}
                 onClick={() =>
@@ -178,7 +178,7 @@ function Login(props) {
                 <div className={classes.formDivider} />
                 <Typography className={classes.formDividerWord}>or</Typography>
                 <div className={classes.formDivider} />
-              </div>
+              </div> */}
               <Fade
                 in={error}
                 style={
@@ -375,7 +375,7 @@ function Login(props) {
         )}
         </div>
         <Typography color="primary" className={classes.copyright}>
-          © 2014-{new Date().getFullYear()} <a style={{ textDecoration: 'none', color: 'inherit' }} href="https://flatlogic.com" rel="noopener noreferrer" target="_blank">Flatlogic</a>, LLC. All rights reserved.
+          @ Copyright {new Date().getFullYear()} xSigma Corporation, a subsidiary of ZK International Group Co., Ltd.
         </Typography>
       </div>
     </Grid>

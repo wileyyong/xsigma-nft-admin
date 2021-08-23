@@ -85,7 +85,7 @@ const Start = () => {
                             </ListItem>
                         </List>
                         <Typography variant={'body2'}>
-                            For more instruction please refer to React Material Admin Full
+                            For more instruction please refer to XSigma Admin
                             readme.md.
                         </Typography>
                     </Widget>
