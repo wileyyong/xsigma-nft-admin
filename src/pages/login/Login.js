@@ -8,23 +8,28 @@ import {
   TextField as Input
 } from "@material-ui/core";
 import { withRouter } from "react-router-dom";
-import classnames from "classnames";
+// import classnames from "classnames";
 
 // styles
 import useStyles from "./styles";
 
 // logo
 import logo from "./logo.png";
-import google from "../../images/google.svg";
+// import google from "../../images/google.svg";
 
 // context
-import { useUserDispatch, loginUser, registerUser, sendPasswordResetEmail } from "../../context/UserContext";
+import {
+  useUserDispatch,
+  loginUser,
+  // registerUser,
+  sendPasswordResetEmail
+} from "../../context/UserContext";
 import { receiveToken, doInit } from "../../context/UserContext";
 
 //components
 import { Button, Typography } from "../../components/Wrappers";
-import Widget from "../../components/Widget";
-import config from "../../config";
+// import Widget from "../../components/Widget";
+// import config from "../../config";
 
 const getGreeting = () => {
   const d = new Date();
@@ -59,9 +64,9 @@ function Login(props) {
   var [isLoading, setIsLoading] = useState(false);
   var [error, setError] = useState(null);
   var [activeTabId, setActiveTabId] = useState(0);
-  var [nameValue, setNameValue] = useState("");
-  var [loginValue, setLoginValue] = useState("admin@flatlogic.com");
-  var [passwordValue, setPasswordValue] = useState("password");
+  // var [nameValue, setNameValue] = useState("");
+  var [loginValue, setLoginValue] = useState("");
+  var [passwordValue, setPasswordValue] = useState("");
   var [forgotEmail, setForgotEmail] = useState("");
   var [isForgot, setIsForgot] = useState(false);
 
@@ -134,7 +139,7 @@ function Login(props) {
           </Tabs>
           {activeTabId === 0 && (
             <React.Fragment>
-              {config.isBackend ? (
+              {/* {config.isBackend ? (
                 <Widget
                   disableWidgetMenu
                   inheritHeight
@@ -152,9 +157,9 @@ function Login(props) {
                     to login!
                   </Typography>
                 </Widget>
-              ) : null}
+              ) : null} */}
               <Typography variant="h1" className={classes.greeting}>
-                {getGreeting()}, User
+                {getGreeting()}
               </Typography>
               {/* <Button
                 size="large"
@@ -186,7 +191,7 @@ function Login(props) {
                 }
               >
                 <Typography color="secondary" className={classes.errorMessage}>
-                  Something is wrong with your login or password :(
+                  Something is wrong with your email or password
                 </Typography>
               </Fade>
               <Input
@@ -255,7 +260,7 @@ function Login(props) {
               </div>
             </React.Fragment>
           )}
-          {activeTabId === 1 && (
+          {/* {activeTabId === 1 && (
             <React.Fragment>
               <Typography variant="h1" className={classes.greeting}>
                 Welcome!
@@ -265,7 +270,7 @@ function Login(props) {
               </Typography>
               <Fade in={error}>
                 <Typography color="secondary" className={classes.errorMessage}>
-                  Something is wrong with your login or password :(
+                  Something is wrong with your email or password
                 </Typography>
               </Fade>
               <Input
@@ -370,7 +375,7 @@ function Login(props) {
                 &nbsp;Sign in with Google
               </Button>
             </React.Fragment>
-          )}
+          )} */}
           </>
         )}
         </div>

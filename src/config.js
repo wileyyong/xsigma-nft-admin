@@ -1,19 +1,19 @@
 const hostApi = process.env.NODE_ENV === "development"
     ? "http://localhost"
-    : "https://sing-generator-node.herokuapp.com";
+    : "https://nft.xsigma.ga";
 const portApi = process.env.NODE_ENV === "development" ? 8080 : "";
-const baseURLApi = `${hostApi}${portApi ? `:${portApi}` : ``}/api`;
-const redirectUrl = process.env.NODE_ENV === "development" ? "http://localhost:3000" : "https://flatlogic.github.io/react-material-admin-full";
+const baseURLApi = 'https://nft.xsigma.ga/api';
+const redirectUrl = process.env.NODE_ENV === "development" ? "http://localhost:3000" : "https://xsigma-nft-admin.vercel.app";
 
 export default {
   hostApi,
   portApi,
   baseURLApi,
   redirectUrl,
-  remote: "https://sing-generator-node.herokuapp.com",
+  remote: "https://nft.xsigma.ga/",
   isBackend: process.env.REACT_APP_BACKEND,
   auth: {
-    email: "admin@flatlogic.com",
-    password: "password"
+    login: "",
+    password: ""
   }
 };

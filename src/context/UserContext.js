@@ -110,36 +110,24 @@ function loginUser(
 ) {
   setError(false);
   setIsLoading(true);
-  // We check if app runs with backend mode
-  if (!config.isBackend) {
-    setTimeout(() => {
-      setError(null);
-      doInit()(dispatch);
-      setIsLoading(false);
-      receiveToken("token", dispatch);
-    }, 2000);
-  } else {
-    if (!!social) {
-      window.location.href = config.baseURLApi + "/auth/signin/" + social + '?app=' + config.redirectUrl;
-    } else if (login.length > 0 && password.length > 0) {
-      axios
-        .post("/auth/signin/local", { email: login, password })
-        .then(res => {
-          const token = res.data;
-          setTimeout(() => {
-            setError(null);
-            setIsLoading(false);
-            receiveToken(token, dispatch);
-            doInit()(dispatch);
-          }, 2000);
-        })
-        .catch(() => {
-          setError(true);
+  if (login.length > 0 && password.length > 0) {
+    axios
+      .post("admin/auth ", { login, password })
+      .then(res => {
+        const data = res.data;
+        setTimeout(() => {
+          setError(null);
           setIsLoading(false);
-        });
-    } else {
-      dispatch({ type: "LOGIN_FAILURE" });
-    }
+          receiveToken(data.token, dispatch);
+          doInit()(dispatch);
+        }, 1000);
+      })
+      .catch(() => {
+        setError(true);
+        setIsLoading(false);
+      });
+  } else {
+    dispatch({ type: "LOGIN_FAILURE" });
   }
 }
 
@@ -174,21 +162,21 @@ function signOut(dispatch, history) {
 }
 
 export function receiveToken(token, dispatch) {
-  let user;
+  // let user;
 
-  // We check if app runs with backend mode
-  if (config.isBackend) {
-    user = jwt.decode(token).user;
-    delete user.id;
-  } else {
-    user = {
-      email: config.auth.email
-    };
-  }
+  // // We check if app runs with backend mode
+  // if (config.isBackend) {
+  //   user = jwt.decode(token).user;
+  //   delete user.id;
+  // } else {
+  //   user = {
+  //     email: config.auth.email
+  //   };
+  // }
 
-  delete user.id;
+  // delete user.id;
   localStorage.setItem("token", token);
-  localStorage.setItem("user", JSON.stringify(user));
+  // localStorage.setItem("user", JSON.stringify(user));
   localStorage.setItem("theme", "default");
   axios.defaults.headers.common["Authorization"] = "Bearer " + token;
   dispatch({ type: "LOGIN_SUCCESS" });
@@ -213,36 +201,25 @@ export function authError(payload) {
 export function doInit() {
   return async (dispatch) => {
     let currentUser = null;
-    if (!config.isBackend) {
-      currentUser = mockUser;
-      
+    try {
+      let token = localStorage.getItem('token');
+      if (token) {
+        currentUser = await findMe();
+      }
+      sessionStorage.setItem('user_id', currentUser.id);
       dispatch({
         type: 'LOGIN_SUCCESS',
         payload: {
           currentUser,
         },
       });
-    } else {
-      try {
-        let token = localStorage.getItem('token');
-        if (token) {
-          currentUser = await findMe();
-        }
-        sessionStorage.setItem('user_id', currentUser.id);
-        dispatch({
-          type: 'LOGIN_SUCCESS',
-          payload: {
-            currentUser,
-          },
-        });
-      } catch (error) {
-        console.log(error);
+    } catch (error) {
+      console.log(error);
 
-        dispatch({
-          type: 'AUTH_INIT_ERROR',
-          payload: error,
-        });
-      }
+      dispatch({
+        type: 'AUTH_INIT_ERROR',
+        payload: error,
+      });
     }
   }
 }
