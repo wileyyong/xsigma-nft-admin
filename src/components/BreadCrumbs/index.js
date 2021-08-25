@@ -8,7 +8,8 @@ import {
     Tabs,
     Tab,
 } from '@material-ui/core'
-import { Typography, Button } from '../Wrappers'
+import moment from 'moment';
+import { Typography } from '../Wrappers'
 import {
     NavigateNext as NavigateNextIcon,
     CalendarToday as CalendarIcon,
@@ -112,7 +113,7 @@ const BreadCrumbs = () => {
           direction="row"
           justify="space-between"
           alignItems="center"
-          wrap={'nowrap'}
+          wrap={'wrap'}
           style={{ overflowX: 'auto' }}
       >
 
@@ -172,15 +173,17 @@ const BreadCrumbs = () => {
                       className={classes.calendarIcon}
                   />
                   <Typography className={classes.date} style={{marginRight: 38}}>
-                      29 Oct 2019, Tuesday
+                    {
+                        moment(new Date()).format('DD MMM YYYY, ddd')
+                    }
                   </Typography>
-                  <Button
+                  {/* <Button
                       variant="contained"
                       color="secondary"
                       className={classes.button}
                   >
                       Latest Reports
-                  </Button>
+                  </Button> */}
               </Box>
           ) : (
             <Breadcrumbs

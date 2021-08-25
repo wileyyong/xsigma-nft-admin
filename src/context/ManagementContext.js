@@ -223,13 +223,15 @@ const actions = {
           type: 'USERS_FORM_FIND_STARTED',
         });
   
-        axios.get(`/admin/moders/${id}`).then(res => {
-          const currentUser = res.data;
-          dispatch({
-            type: 'USERS_FORM_FIND_SUCCESS',
-            payload: currentUser,
+        if (id) {
+          axios.get(`/admin/moders/${id}`).then(res => {
+            const currentUser = res.data;
+            dispatch({
+              type: 'USERS_FORM_FIND_SUCCESS',
+              payload: currentUser,
+            });
           });
-        })
+        }
       } catch (error) {
         toast("Error");
         console.log(error)
