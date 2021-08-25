@@ -10,10 +10,10 @@ export default {
   portApi,
   baseURLApi,
   redirectUrl,
-  remote: "https://nft.xsigma.ga/",
-  isBackend: process.env.REACT_APP_BACKEND,
+  remote: "https://nft.xsigma.ga",
+  isBackend: process.env.REACT_APP_BACKEND || true,
   auth: {
-    login: "",
+    email: "",
     password: ""
   }
 };

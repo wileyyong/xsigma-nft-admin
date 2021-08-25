@@ -1,6 +1,6 @@
 import React from "react";
 import axios from "axios";
-import jwt from "jsonwebtoken";
+// import jwt from "jsonwebtoken";
 import { toast } from "react-toastify";
 import { mockUser } from "./mock";
 
@@ -54,14 +54,15 @@ function UserProvider({ children }) {
   var [state, dispatch] = React.useReducer(userReducer, {
     isAuthenticated: () => {
       const token = localStorage.getItem("token")
-      if (config.isBackend && token) {
-        const date = new Date().getTime() / 1000;
-        const data = jwt.decode(token);
-        if (!data) return false;
-        return date < data.exp;
-      } else if (token) {
-        return true
-      }
+      // if (config.isBackend && token) {
+      //   const date = new Date().getTime() / 1000;
+      //   const data = jwt.decode(token);
+      //   if (!data) return false;
+      //   return date < data.exp;
+      // } else if (token) {
+      //   return true
+      // }
+      if (token) return true;
       return false;
     },
     isFetching: false,
@@ -112,7 +113,7 @@ function loginUser(
   setIsLoading(true);
   if (login.length > 0 && password.length > 0) {
     axios
-      .post("admin/auth ", { login, password })
+      .post("admin/auth ", { email: login, password })
       .then(res => {
         const data = res.data;
         setTimeout(() => {
@@ -167,14 +168,14 @@ export function receiveToken(token, dispatch) {
   // // We check if app runs with backend mode
   // if (config.isBackend) {
   //   user = jwt.decode(token).user;
-  //   delete user.id;
+  //   delete user._id;
   // } else {
   //   user = {
   //     email: config.auth.email
   //   };
   // }
 
-  // delete user.id;
+  // delete user._id;
   localStorage.setItem("token", token);
   // localStorage.setItem("user", JSON.stringify(user));
   localStorage.setItem("theme", "default");
@@ -184,8 +185,11 @@ export function receiveToken(token, dispatch) {
 
 async function findMe() {
   if (config.isBackend) {
-    const response = await axios.get('/auth/me');
-    return response.data;    
+    const response = await axios.get('/admin/moders/me');
+    if (response.status === 200) {
+      localStorage.setItem("user", JSON.stringify(response.data.moder));
+      return response.data.moder;
+    }
   } else {
     return mockUser;
   }
@@ -206,7 +210,7 @@ export function doInit() {
       if (token) {
         currentUser = await findMe();
       }
-      sessionStorage.setItem('user_id', currentUser.id);
+      localStorage.setItem('user_id', currentUser._id);
       dispatch({
         type: 'LOGIN_SUCCESS',
         payload: {

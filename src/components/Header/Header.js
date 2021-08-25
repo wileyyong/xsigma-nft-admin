@@ -19,6 +19,7 @@ import {
   ArrowBack as ArrowBackIcon
 } from "@material-ui/icons";
 import classNames from "classnames";
+import { useHistory } from 'react-router-dom';
 
 //images
 import profile from "../../images/main-profile.png";
@@ -40,7 +41,6 @@ import {
 } from "../../context/LayoutContext";
 import {
   useManagementDispatch,
-  useManagementState,
 } from '../../context/ManagementContext'
 
 import { actions } from '../../context/ManagementContext'
@@ -108,7 +108,7 @@ export default function Header(props) {
   var layoutDispatch = useLayoutDispatch();
   var userDispatch = useUserDispatch();
   const managementDispatch = useManagementDispatch();
-
+  const history = useHistory();
   // local
   var [mailMenu, setMailMenu] = useState(null);
   var [isMailsUnread, setIsMailsUnread] = useState(true);
@@ -117,11 +117,12 @@ export default function Header(props) {
   var [profileMenu, setProfileMenu] = useState(null);
   var [isSearchOpen, setSearchOpen] = useState(false);
   const [isSmall, setSmall] = useState(false);
-
-  const managementValue = useManagementState()
+  const [userInfo, setUser] = useState(null);
 
   useEffect(() => {
-    actions.doFind(sessionStorage.getItem('user_id'))(managementDispatch)
+    actions.doFind(localStorage.getItem('user_id'))(managementDispatch);
+    const user = JSON.parse(localStorage.getItem('user'));
+    setUser(user);
   }, [managementDispatch])
 
   useEffect(function() {
@@ -234,7 +235,7 @@ export default function Header(props) {
           <Avatar
             alt="Robert Cotton"
             /* eslint-disable-next-line no-mixed-operators */
-            src={config.isBackend ? (managementValue.currentUser && managementValue.currentUser.avatar.length >=1 && managementValue.currentUser.avatar[managementValue.currentUser.avatar.length-1].publicUrl || profile) : profile}
+            src={userInfo ? config.remote + userInfo.avatar : profile}
             classes={{ root: classes.headerIcon }}
           />
         </IconButton>
@@ -243,9 +244,8 @@ export default function Header(props) {
           variant="body2"
           style={{ display: "flex", alignItems: "center", marginLeft: 8 }}
         >
-          <div className={classes.profileLabel}>Hi,&nbsp;</div>
           <Typography variant="body2" weight={"bold"} className={classes.profileLabel}>
-            Robert Cotton
+            {userInfo ? userInfo.name : 'Admin'}
           </Typography>
         </Typography>
         <Menu
@@ -332,15 +332,7 @@ export default function Header(props) {
         >
           <div className={classes.profileMenuUser}>
             <Typography variant="h4" weight="medium">
-              Robert Cotton
-            </Typography>
-            <Typography
-              className={classes.profileMenuLink}
-              component="a"
-              color="primary"
-              href="https://flatlogic.com"
-            >
-              Flatlogic.com
+              {userInfo ? userInfo.name : 'Admin'}
             </Typography>
           </div>
           <MenuItem
@@ -348,24 +340,9 @@ export default function Header(props) {
               classes.profileMenuItem,
               classes.headerMenuItem
             )}
+            onClick={() => history.push('/app/profile')}
           >
             <AccountIcon className={classes.profileMenuIcon} /> Profile
-          </MenuItem>
-          <MenuItem
-            className={classNames(
-              classes.profileMenuItem,
-              classes.headerMenuItem
-            )}
-          >
-            <AccountIcon className={classes.profileMenuIcon} /> Tasks
-          </MenuItem>
-          <MenuItem
-            className={classNames(
-              classes.profileMenuItem,
-              classes.headerMenuItem
-            )}
-          >
-            <AccountIcon className={classes.profileMenuIcon} /> Messages
           </MenuItem>
           <div className={classes.profileMenuUser}>
             <Typography

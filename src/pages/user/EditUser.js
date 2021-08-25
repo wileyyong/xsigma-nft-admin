@@ -135,7 +135,7 @@ const EditUser = () => {
       if (id !== 'edit') {
         actions.doFind(id)(managementDispatch)
       } else {
-        actions.doFind(sessionStorage.getItem('user_id'))(managementDispatch)
+        actions.doFind(localStorage.getItem('user_id'))(managementDispatch)
       }// eslint-disable-next-line
     }, []);
 
@@ -160,7 +160,7 @@ const EditUser = () => {
 
     function handleSubmit() {
       if (id === 'edit') {
-        actions.doUpdate(sessionStorage.getItem('user_id'), data, history)(managementDispatch)
+        actions.doUpdate(localStorage.getItem('user_id'), data, history)(managementDispatch)
       } else {
         actions.doUpdate(id, data, history)(managementDispatch)        
       }

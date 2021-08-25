@@ -223,7 +223,7 @@ const actions = {
           type: 'USERS_FORM_FIND_STARTED',
         });
   
-        axios.get(`/users/${id}`).then(res => {
+        axios.get(`/admin/moders/${id}`).then(res => {
           const currentUser = res.data;
           dispatch({
             type: 'USERS_FORM_FIND_SUCCESS',
